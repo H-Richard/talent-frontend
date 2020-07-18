@@ -143,8 +143,7 @@ const enhanceForm = withFormik({
     values: FormValues,
     { props: { login } }: { props: Props },
   ) => {
-    login({ email: values.email, password: values.password });
-    window.location.href = '/home';
+    login({ email: values.email, password: values.password, callback() { window.location.href = '/home'; } });
   },
   displayName: 'login',
 });

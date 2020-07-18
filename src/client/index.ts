@@ -23,6 +23,8 @@ export const getDefaultHeaders = () => {
 
   if (isLoggedIn()) {
     headers.Authorization = getAuthHeader();
+  } else {
+    window.location.href = '/login';
   }
   return headers;
 };
@@ -110,6 +112,27 @@ export const get = async ({
       ...getDefaultHeaders(),
       ...headers,
     },
+  });
+  const data = await response.json();
+  if (response.ok) return data;
+  return Promise.reject(new RequestError(response));
+};
+
+export const unauthenticatedRequest = async ({
+  url,
+  method,
+  body,
+}: {
+  url: string,
+  method: string,
+  headers?: object
+  body?: object
+}) => {
+  const response = await fetch(buildURL(url), {
+    method,
+    cache: 'no-cache',
+    headers: { 'Content-Type': 'application/json' },
+    body: body ? JSON.stringify(body) : undefined,
   });
   const data = await response.json();
   if (response.ok) return data;
