@@ -7,6 +7,17 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import store from './app/store';
 import * as serviceWorker from './serviceWorker';
+import { isLoggedIn } from './client/jwt';
+import { loginSuccess } from './app/modular/auth/actions';
+import { getCurrentUser } from './client/user';
+
+const user = getCurrentUser();
+if (isLoggedIn() && user) {
+  user.updatedAt = new Date(user.updatedAt);
+  store.dispatch(loginSuccess(
+    user,
+  ));
+}
 
 ReactDOM.render(
   <React.StrictMode>
