@@ -1,5 +1,19 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
+## Prerequisites
+
+ - [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+ - [Yarn](https://yarnpkg.com/getting-started/install)
+
+## Development
+
+Git has autocrlf setup by default, once we clone the repo we can disable it with `git config --local core.autocrlf false`
+
+Then to undo changes run `git rm --cached -r . && git reset --hard`
+
+To get started with development run `yarn install && yarn start`
+
+
 ## Available Scripts
 
 In the project directory, you can run:
