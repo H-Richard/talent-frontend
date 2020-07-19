@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
-  useEffect, useState, useMemo, useCallback,
+  useState, useMemo, useCallback,
 } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider, Theme } from '@material-ui/core';
-import * as request from './client';
 import './App.css';
 import Login from './pages/Login';
 import { isLoggedIn } from './client/jwt';
+import Modals from './components/Modals';
 
 function App() {
   const [themeType, setThemeType] = useState<'light' | 'dark' | undefined>('light');
@@ -36,6 +36,7 @@ function App() {
       <Switch>
         <Route path="/login" exact render={() => (isLoggedIn() ? <Redirect to="/home" /> : <Login />)} />
       </Switch>
+      <Modals />
     </ThemeProvider>
   );
 }
