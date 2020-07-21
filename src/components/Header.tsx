@@ -7,6 +7,9 @@ import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid'
 
+interface ToggleMode {
+  ClickHandler: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
 const DarkModeSwitch = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -23,8 +26,8 @@ const DarkModeSwitch = withStyles((theme: Theme) =>
         color: theme.palette.common.white,
         '& + $track': {
           opacity: 1,
-          backgroundColor: '#52d869',
-          border: 'none'
+          backgroundColor: theme.palette.grey[500],
+          border: 'none',
         },
       },
     },
@@ -52,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Header = () => {
+const Header = (Props: ToggleMode) => {
     const classes = useStyles();
     return(
         <div>
@@ -65,7 +68,7 @@ const Header = () => {
                 <Grid container alignItems="center" justify="flex-end" spacing={1}>
                   <Grid item>Dark Mode</Grid>
                   <Grid item>
-                    <DarkModeSwitch />
+                    <DarkModeSwitch onChange={Props.ClickHandler}/>
                   </Grid>
                   <Grid item>
                     <Button color="inherit" href="/login"

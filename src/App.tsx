@@ -38,7 +38,7 @@ function App() {
         <Route path="/login" exact render={() => (isLoggedIn() ? <Redirect to="/home" /> : <Login />)} />
       </Switch>
       <Modals />
-      <Header />
+      <Header ClickHandler={toggleMode}/>
     </ThemeProvider>
   );
 }
