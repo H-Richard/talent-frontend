@@ -8,7 +8,7 @@ import './App.css';
 import Login from './pages/Login';
 import { isLoggedIn } from './client/jwt';
 import Modals from './components/Modals';
-import Header from './components/Header/index';
+import Header from './components/Header/';
 
 function App() {
   const [themeType, setThemeType] = useState<'light' | 'dark' | undefined>('light');
@@ -34,11 +34,11 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Header toggleTheme={toggleMode} />
       <Switch>
         <Route path="/login" exact render={() => (isLoggedIn() ? <Redirect to="/home" /> : <Login />)} />
       </Switch>
       <Modals />
-      <Header ClickHandler={toggleMode} />
     </ThemeProvider>
   );
 }

@@ -2,15 +2,10 @@ import React from 'react';
 import {
   makeStyles, withStyles, createStyles, Theme,
 } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Switch from '@material-ui/core/Switch';
-import Grid from '@material-ui/core/Grid';
+import { AppBar, Toolbar, Typography, Button, Switch, Grid} from '@material-ui/core';
 
-interface ToggleMode {
-  ClickHandler: (event: React.ChangeEvent<HTMLInputElement>) => void
+interface props {
+  toggleTheme: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 const DarkModeSwitch = withStyles((theme: Theme) => createStyles({
   root: {
@@ -56,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Header = (Props: ToggleMode) => {
+const Header: React.FC<props> = ({toggleTheme}: props) => {
   const classes = useStyles();
   return (
     <div>
@@ -69,7 +64,7 @@ const Header = (Props: ToggleMode) => {
             <Grid container alignItems="center" justify="flex-end" spacing={1}>
               <Grid item>Dark Mode</Grid>
               <Grid item>
-                <DarkModeSwitch onChange={Props.ClickHandler} />
+                <DarkModeSwitch onChange={toggleTheme} />
               </Grid>
               <Grid item>
                 <Button
