@@ -16,30 +16,29 @@ const DarkModeSwitch = withStyles((theme: Theme) => createStyles({
   root: {
     width: 80,
     height: 48,
-    padding: 10,
+    padding: 8,
   },
   switchBase: {
-    padding: 9,
+    padding: 11,
     color: '#ff6a00',
   },
   thumb: {
-    width: 30,
-    height: 30,
-    backgroundColor: theme.palette.common.white,
-    border: 'solid',
-    borderColor: theme.palette.grey[800],
+    width: 26,
+    height: 26,
+    backgroundColor: '#fff',
   },
   track: {
-    backgroundSize: '30px 28px',
-    backgroundColor: theme.palette.common.white,
-    backgroundImage: `url(${Sun})`,
+    background: `${theme.palette.grey[800]} !important`,
+    backgroundSize: '26px 25px !important',
+    backgroundImage: `url(${Sun}) !important`,
+    backgroundPosition: '80% 48% !important',
+    backgroundRepeat: 'no-repeat !important',
     opacity: '1 !important',
     borderRadius: 20,
     position: 'relative',
   },
   checked: {
     '&$switchBase': {
-      padding: 9,
       color: '#185a9d',
       transform: 'translateX(32px)',
       '&:hover': {
@@ -47,13 +46,14 @@ const DarkModeSwitch = withStyles((theme: Theme) => createStyles({
       },
     },
     '& $thumb': {
-      backgroundColor: theme.palette.common.white,
-      border: 'solid',
-      borderColor: theme.palette.grey[800],
+      backgroundColor: '#fff',
     },
     '& + $track': {
-      backgroundSize: '34px 28px',
-      backgroundImage: `url(${Moon})`,
+      background: `${theme.palette.grey[800]} !important`,
+      backgroundSize: '15px 25px !important',
+      backgroundImage: `url(${Moon}) !important`,
+      backgroundPosition: '25% 50% !important',
+      backgroundRepeat: 'no-repeat !important',
     },
   },
 }))(Switch);
@@ -72,7 +72,7 @@ const Header: React.FC<Props> = ({ toggleTheme }: Props) => {
   const classes = useStyles();
   return (
     <div>
-      <AppBar position="fixed">
+      <AppBar position="fixed" color="primary">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             Talent
