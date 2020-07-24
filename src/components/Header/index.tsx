@@ -10,6 +10,7 @@ import Sun from './img/sun.png';
 
 interface Props {
   toggleTheme: (arg0: React.ChangeEvent<HTMLInputElement>) => void
+  theme?: string
 }
 
 const DarkModeSwitch = withStyles((theme: Theme) => createStyles({
@@ -58,21 +59,20 @@ const DarkModeSwitch = withStyles((theme: Theme) => createStyles({
   },
 }))(Switch);
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
   },
   title: {
     flexGrow: 1,
-    color: theme.palette.common.white,
   },
 }));
 
-const Header: React.FC<Props> = ({ toggleTheme }: Props) => {
+const Header: React.FC<Props> = ({ toggleTheme, theme }: Props) => {
   const classes = useStyles();
   return (
     <div>
-      <AppBar position="fixed" color="primary">
+      <AppBar position="fixed" color="default">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             Talent
@@ -80,7 +80,7 @@ const Header: React.FC<Props> = ({ toggleTheme }: Props) => {
           <Typography>
             <Grid container alignItems="center" justify="flex-end" spacing={1}>
               <Grid item>
-                <DarkModeSwitch onChange={toggleTheme} />
+                <DarkModeSwitch onChange={toggleTheme} checked={theme === 'dark'} />
               </Grid>
               <Grid item>
                 <Button

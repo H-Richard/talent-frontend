@@ -35,7 +35,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header toggleTheme={toggleMode} />
+      <Header toggleTheme={toggleMode} theme={themeType} />
       <Switch>
         <Route path="/login" exact render={() => (isLoggedIn() ? <Redirect to="/home" /> : <Login />)} />
       </Switch>
