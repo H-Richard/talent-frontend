@@ -10,6 +10,7 @@ type AuthActions = ActionType<typeof actions>;
 
 const initialState: AuthState = {
   loading: false,
+  errMsg: '',
 };
 
 export type AuthReducer = Reducer<AuthState, AuthActions>;
@@ -22,6 +23,7 @@ const reducer: AuthReducer = produce(
         break;
       case actions.LOGIN_ERROR:
         state.loading = false;
+        state.errMsg = action.payload.errMsg;
         break;
       case actions.LOGIN_SUCCESS:
         state.currentUser = action.payload.user;

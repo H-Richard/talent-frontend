@@ -12,7 +12,7 @@ export const LOGIN_ERROR = 'auth/loginError';
 
 export const loginStart = () => action(LOGIN_START);
 
-export const loginError = () => action(LOGIN_ERROR);
+export const loginError = (errMsg: String) => action(LOGIN_ERROR, { errMsg });
 
 export const loginSuccess = (user: User) => action(LOGIN_SUCCESS, { user });
 
@@ -34,6 +34,6 @@ export const login = (
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(err);
-    dispatch(loginError());
+    dispatch(loginError(err.message));
   }
 });

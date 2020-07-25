@@ -9,4 +9,5 @@ export interface User {
 export interface AuthState {
   loading: boolean
   currentUser?: User
+  errMsg: String
 }
