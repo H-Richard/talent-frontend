@@ -22,7 +22,8 @@ export const login = (
 ): ThunkAction<void, RootState, unknown, Action> => (async (dispatch) => {
   dispatch(loginStart());
   try {
-    const { token, user }: any = await request.post({
+    const { token, user }: any = await request.unauthenticatedRequest({
+      method: 'POST',
       url: 'login',
       body: { email, password },
     });
