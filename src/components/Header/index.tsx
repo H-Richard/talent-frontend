@@ -77,30 +77,28 @@ const Header: React.FC<Props> = ({ toggleTheme, theme }: Props) => {
           <Typography variant="h6" className={classes.title}>
             Talent
           </Typography>
-          <Typography>
-            <Grid container alignItems="center" justify="flex-end" spacing={1}>
-              <Grid item>
-                <DarkModeSwitch onChange={toggleTheme} checked={theme === 'dark'} />
-              </Grid>
-              <Grid item>
-                <Button
-                  color="inherit"
-                  href="/login"
-                >
-                  Login
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="outlined"
-                  color="inherit"
-                  href="/signup"
-                >
-                  Join
-                </Button>
-              </Grid>
+          <Grid container alignItems="center" justify="flex-end" spacing={1}>
+            <Grid item>
+              <DarkModeSwitch onChange={toggleTheme} checked={theme === 'dark'} />
             </Grid>
-          </Typography>
+            <Grid item>
+              <Button
+                color="inherit"
+                href="/login"
+              >
+                Login
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="outlined"
+                color="inherit"
+                href="/signup"
+              >
+                Join
+              </Button>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
     </div>
