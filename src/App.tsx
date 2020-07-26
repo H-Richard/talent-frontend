@@ -11,19 +11,26 @@ import Modals from './components/Modals';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-
 function App() {
   const [themeType, setThemeType] = useState<'light' | 'dark' | undefined>('light');
   const toggleMode = useCallback(() => {
-    themeType === 'light' ? localStorage.setItem('themeType', 'dark') : localStorage.setItem('themeType', 'light');
+    if (themeType === 'light') {
+      localStorage.setItem('themeType', 'dark');
+    } else {
+      localStorage.setItem('themeType', 'light');
+    }
     setThemeType(themeType === 'light' ? 'dark' : 'light');
   }, [themeType, setThemeType]);
 
   const theme: Theme = useMemo(() => {
-    if(!localStorage.getItem('themeType')){
-      themeType === 'light' ? localStorage.setItem('themeType', 'light') : localStorage.setItem('themeType', 'dark');
+    if (!localStorage.getItem('themeType')) {
+      if (themeType === 'light') {
+        localStorage.setItem('themeType', 'dark');
+      } else {
+        localStorage.setItem('themeType', 'light');
+      }
     } else {
-       setThemeType(localStorage.getItem('themeType') === 'light' ? 'light' : 'dark');
+      setThemeType(localStorage.getItem('themeType') === 'light' ? 'light' : 'dark');
     }
     const light = themeType === 'light';
     return createMuiTheme({
