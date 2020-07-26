@@ -71,7 +71,7 @@ const useStyles = makeStyles(() => ({
 const Header: React.FC<Props> = ({ toggleTheme, theme }: Props) => {
   const classes = useStyles();
   return (
-    <div>
+    <header>
       <AppBar position="fixed" color="default">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
@@ -103,7 +103,7 @@ const Header: React.FC<Props> = ({ toggleTheme, theme }: Props) => {
           </Typography>
         </Toolbar>
       </AppBar>
-    </div>
+    </header>
   );
 };
 
