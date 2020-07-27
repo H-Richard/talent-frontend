@@ -27,11 +27,11 @@ function App() {
     setThemeType(localStorage.getItem('themeType') === 'light' ? 'light' : 'dark');
   }, []);
 
-  window.addEventListener('storage', function(e) {
-    if (e.key === 'themeType'){
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'themeType') {
       setThemeType(localStorage.getItem('themeType') === 'light' ? 'light' : 'dark');
     }
-  }, {once: false});
+  }, { once: false });
 
   const theme: Theme = useMemo(() => {
     const light = themeType === 'light';
