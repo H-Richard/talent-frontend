@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
-  useState, useMemo, useCallback,
+  useState, useMemo, useCallback, useEffect,
 } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider, Theme } from '@material-ui/core';
@@ -13,25 +13,27 @@ import Footer from './components/Footer';
 
 function App() {
   const [themeType, setThemeType] = useState<'light' | 'dark' | undefined>('light');
+  useEffect(() => {
+    if (!localStorage.getItem('themeType')) {
+      localStorage.setItem('themeType', 'light');
+    }
+  });
   const toggleMode = useCallback(() => {
-    if (themeType === 'light') {
+    if (localStorage.getItem('themeType') === 'light') {
       localStorage.setItem('themeType', 'dark');
     } else {
       localStorage.setItem('themeType', 'light');
     }
-    setThemeType(themeType === 'light' ? 'dark' : 'light');
-  }, [themeType, setThemeType]);
+    setThemeType(localStorage.getItem('themeType') === 'light' ? 'light' : 'dark');
+  }, []);
 
-  const theme: Theme = useMemo(() => {
-    if (!localStorage.getItem('themeType')) {
-      if (themeType === 'light') {
-        localStorage.setItem('themeType', 'dark');
-      } else {
-        localStorage.setItem('themeType', 'light');
-      }
-    } else {
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'themeType'){
       setThemeType(localStorage.getItem('themeType') === 'light' ? 'light' : 'dark');
     }
+  }, {once: false});
+
+  const theme: Theme = useMemo(() => {
     const light = themeType === 'light';
     return createMuiTheme({
       palette: {
