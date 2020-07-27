@@ -20,12 +20,14 @@ interface Props {
   handleClose?: VoidFunction;
   children: React.ReactNode;
   open: boolean;
+  className?: string;
 }
 
 const Container: React.FC<Props> = ({
   handleClose,
   children,
   open,
+  className,
 }: Props) => {
   const classes = useStyles();
 
@@ -33,7 +35,7 @@ const Container: React.FC<Props> = ({
     <Modal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
-      className={classes.modal}
+      className={className ? `${classes.modal} ${className}` : classes.modal}
       onClose={handleClose}
       open={open}
       closeAfterTransition
