@@ -35,7 +35,7 @@ const Container: React.FC<Props> = ({
     <Modal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
-      className={className ? `${classes.modal} ${className}` : classes.modal}
+      className={classes.modal}
       onClose={handleClose}
       open={open}
       closeAfterTransition
@@ -47,7 +47,7 @@ const Container: React.FC<Props> = ({
       <Fade
         in={open}
       >
-        <Paper className={classes.paper}>
+        <Paper className={className ? `${classes.paper} ${className}` : classes.paper}>
           {children}
         </Paper>
       </Fade>
