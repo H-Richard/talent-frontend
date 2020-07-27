@@ -20,12 +20,14 @@ interface Props {
   handleClose?: VoidFunction;
   children: React.ReactNode;
   open: boolean;
+  className?: string;
 }
 
 const Container: React.FC<Props> = ({
   handleClose,
   children,
   open,
+  className,
 }: Props) => {
   const classes = useStyles();
 
@@ -45,7 +47,7 @@ const Container: React.FC<Props> = ({
       <Fade
         in={open}
       >
-        <Paper className={classes.paper}>
+        <Paper className={className ? `${classes.paper} ${className}` : classes.paper}>
           {children}
         </Paper>
       </Fade>
