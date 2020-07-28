@@ -12,32 +12,32 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 function App() {
-  const [themeType, setThemeType] = useState<'light' | 'dark' | undefined>('light');
+  // const [themeType, setThemeType] = useState<'light' | 'dark' | undefined>('light');
   useEffect(() => {
     if (!localStorage.getItem('themeType')) {
       localStorage.setItem('themeType', 'light');
     }
   });
-  const toggleMode = useCallback(() => {
-    if (localStorage.getItem('themeType') === 'light') {
-      localStorage.setItem('themeType', 'dark');
+
+  const themeMode = (): 'light' | 'dark' | undefined => {
+    if(localStorage.getItem('themeType') === 'light'){
+      return 'light';
     } else {
-      localStorage.setItem('themeType', 'light');
+      return 'dark';
     }
-    setThemeType(localStorage.getItem('themeType') === 'light' ? 'light' : 'dark');
-  }, []);
+  };
 
   window.addEventListener('storage', (e) => {
     if (e.key === 'themeType') {
-      setThemeType(localStorage.getItem('themeType') === 'light' ? 'light' : 'dark');
+      // Make React Re render
     }
   }, { once: false });
 
   const theme: Theme = useMemo(() => {
-    const light = themeType === 'light';
+    const light = themeMode() === 'light';
     return createMuiTheme({
       palette: {
-        type: themeType,
+        type: themeMode(),
         primary: {
           main: light ? '#1976d2' : '#90caf9',
         },
@@ -47,11 +47,11 @@ function App() {
         },
       },
     });
-  }, [themeType]);
+  }, [themeMode]);
 
   return (
     <ThemeProvider theme={theme}>
-      <Header toggleTheme={toggleMode} theme={themeType} />
+      <Header />
       <Switch>
         <Route path="/login" exact render={() => (isLoggedIn() ? <Redirect to="/home" /> : <Login />)} />
       </Switch>

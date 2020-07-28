@@ -8,10 +8,26 @@ import {
 import Moon from './img/moon.png';
 import Sun from './img/sun.png';
 
-interface Props {
-  toggleTheme: (arg0: React.ChangeEvent<HTMLInputElement>) => void
-  theme?: string
+// interface Props {
+//   toggleTheme: (arg0: React.ChangeEvent<HTMLInputElement>) => void
+//   theme?: string
+// }
+
+const toggleMode = (): void => {
+  if(localStorage.getItem('themeType') === 'light') {
+    localStorage.setItem('themeType', 'dark');
+  } else {
+    localStorage.setItem('themeType', 'light');
+  }
 }
+
+const themeMode = (): 'light' | 'dark' | undefined => {
+  if(localStorage.getItem('themeType') === 'light'){
+    return 'light';
+  } else {
+    return 'dark';
+  }
+};
 
 const DarkModeSwitch = withStyles((theme: Theme) => createStyles({
   root: {
@@ -68,7 +84,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Header: React.FC<Props> = ({ toggleTheme, theme }: Props) => {
+const Header: React.FC = () => {
   const classes = useStyles();
   return (
     <header>
@@ -79,7 +95,7 @@ const Header: React.FC<Props> = ({ toggleTheme, theme }: Props) => {
           </Typography>
           <Grid container alignItems="center" justify="flex-end" spacing={1}>
             <Grid item>
-              <DarkModeSwitch onChange={toggleTheme} checked={theme === 'dark'} />
+              <DarkModeSwitch onChange={toggleMode} checked={themeMode() === 'dark'} />
             </Grid>
             <Grid item>
               <Button
