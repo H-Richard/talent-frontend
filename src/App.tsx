@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
   useState, useMemo, useCallback, useEffect,
@@ -10,44 +12,15 @@ import { isLoggedIn } from './client/jwt';
 import Modals from './components/Modals';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { useThemeMode, computeTheme } from './theme';
 
 function App() {
-  // const [themeType, setThemeType] = useState<'light' | 'dark' | undefined>('light');
-  useEffect(() => {
-    if (!localStorage.getItem('themeType')) {
-      localStorage.setItem('themeType', 'light');
-    }
-  });
+  const currentTheme = useThemeMode();
 
-  const themeMode = (): 'light' | 'dark' | undefined => {
-    if(localStorage.getItem('themeType') === 'light'){
-      return 'light';
-    } else {
-      return 'dark';
-    }
-  };
-
-  window.addEventListener('storage', (e) => {
-    if (e.key === 'themeType') {
-      // Make React Re render
-    }
-  }, { once: false });
-
-  const theme: Theme = useMemo(() => {
-    const light = themeMode() === 'light';
-    return createMuiTheme({
-      palette: {
-        type: themeMode(),
-        primary: {
-          main: light ? '#1976d2' : '#90caf9',
-        },
-        background: {
-          default: light ? '#fafafa' : '#121212',
-          paper: light ? '#fff' : '#1c1c1c',
-        },
-      },
-    });
-  }, [themeMode]);
+  const theme: Theme = useMemo(
+    () => computeTheme(currentTheme),
+    [currentTheme],
+  );
 
   return (
     <ThemeProvider theme={theme}>
