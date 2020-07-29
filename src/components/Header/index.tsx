@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   makeStyles, withStyles, createStyles, Theme,
 } from '@material-ui/core/styles';
@@ -7,11 +7,7 @@ import {
 } from '@material-ui/core';
 import Moon from './img/moon.png';
 import Sun from './img/sun.png';
-
-interface Props {
-  toggleTheme: (arg0: React.ChangeEvent<HTMLInputElement>) => void
-  theme?: string
-}
+import { useThemeMode } from '../../theme';
 
 const DarkModeSwitch = withStyles((theme: Theme) => createStyles({
   root: {
@@ -68,10 +64,17 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Header: React.FC<Props> = ({ toggleTheme, theme }: Props) => {
+const Header: React.FC = () => {
   const classes = useStyles();
+  const currentTheme = useThemeMode();
+
+  const toggleTheme = useCallback(() => {
+    localStorage.setItem('themeType',
+      localStorage.getItem('themeType') === 'dark' ? 'light' : 'dark');
+  }, []);
+
   return (
-    <div>
+    <header>
       <AppBar position="fixed" color="default">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
@@ -79,7 +82,7 @@ const Header: React.FC<Props> = ({ toggleTheme, theme }: Props) => {
           </Typography>
           <Grid container alignItems="center" justify="flex-end" spacing={1}>
             <Grid item>
-              <DarkModeSwitch onChange={toggleTheme} checked={theme === 'dark'} />
+              <DarkModeSwitch onChange={toggleTheme as VoidFunction} checked={currentTheme === 'dark'} />
             </Grid>
             <Grid item>
               <Button
@@ -101,7 +104,7 @@ const Header: React.FC<Props> = ({ toggleTheme, theme }: Props) => {
           </Grid>
         </Toolbar>
       </AppBar>
-    </div>
+    </header>
   );
 };
 
