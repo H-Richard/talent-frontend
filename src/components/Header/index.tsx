@@ -7,7 +7,6 @@ import {
 } from '@material-ui/core';
 import Moon from './img/moon.png';
 import Sun from './img/sun.png';
-// eslint-disable-next-line import/no-cycle
 import { useThemeMode } from '../../theme';
 
 const DarkModeSwitch = withStyles((theme: Theme) => createStyles({
