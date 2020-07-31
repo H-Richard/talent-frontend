@@ -140,10 +140,16 @@ const enhanceForm = withFormik({
     password: yup.string().min(1).required('Enter your password.'),
   }),
   handleSubmit: (
-    values: FormValues,
-    { props: { login } }: { props: Props },
+    { email, password }: FormValues,
+    { props: { login }, setSubmitting, setFieldValue }:
+    { props: Props, setSubmitting: Function, setFieldValue: Function },
   ) => {
-    login({ email: values.email, password: values.password, callback() { window.location.href = '/home'; } });
+    login({
+      email,
+      password,
+      onLoginSuccess() { setSubmitting(false); window.location.href = '/home'; },
+      onLoginFailure() { setSubmitting(false); setFieldValue('password', '', false); },
+    });
   },
   displayName: 'login',
 });

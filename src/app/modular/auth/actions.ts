@@ -18,7 +18,17 @@ export const loginSuccess = (user: User) => action(LOGIN_SUCCESS, { user });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const login = (
-  { email, password, callback }: { email: string, password: string, callback: VoidFunction },
+  {
+    email,
+    password,
+    onLoginSuccess,
+    onLoginFailure,
+  }: {
+    email: string,
+    password: string,
+    onLoginSuccess: VoidFunction,
+    onLoginFailure: VoidFunction
+  },
 ): ThunkAction<void, RootState, unknown, Action> => (async (dispatch) => {
   dispatch(loginStart());
   try {
@@ -31,10 +41,11 @@ export const login = (
     user.updatedAt = new Date(user.updatedAt);
     saveCurrentUser(user);
     dispatch(loginSuccess(user));
-    callback();
+    onLoginSuccess();
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(err);
     dispatch(loginError());
+    onLoginFailure();
   }
 });
