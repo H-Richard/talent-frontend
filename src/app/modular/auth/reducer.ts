@@ -22,9 +22,21 @@ const reducer: AuthReducer = produce(
         break;
       case actions.LOGIN_ERROR:
         state.loading = false;
+        switch (action.payload.error.slice(-3)) {
+          case '401':
+            state.error = 'Incorrect credentials.';
+            break;
+          default:
+            state.error = action.payload.error;
+            break;
+        }
+
         break;
       case actions.LOGIN_SUCCESS:
         state.currentUser = action.payload.user;
+        break;
+      case actions.CLEAR_ERROR:
+        state.error = undefined;
         break;
       default:
         break;

@@ -9,12 +9,15 @@ import { saveCurrentUser } from '../../../client/user';
 export const LOGIN_START = 'auth/loginStart';
 export const LOGIN_SUCCESS = 'auth/loginSuccess';
 export const LOGIN_ERROR = 'auth/loginError';
+export const CLEAR_ERROR = 'auth/clearError';
 
 export const loginStart = () => action(LOGIN_START);
 
-export const loginError = () => action(LOGIN_ERROR);
+export const loginError = (error: string) => action(LOGIN_ERROR, { error });
 
 export const loginSuccess = (user: User) => action(LOGIN_SUCCESS, { user });
+
+export const clearError = () => action(CLEAR_ERROR);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const login = (
@@ -45,7 +48,7 @@ export const login = (
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(err);
-    dispatch(loginError());
+    dispatch(loginError(err.message as string));
     onLoginFailure();
   }
 });

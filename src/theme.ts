@@ -46,6 +46,10 @@ export const computeTheme = (currentTheme: 'light' | 'dark' | undefined): Theme 
         default: light ? '#fafafa' : '#121212',
         paper: light ? '#fff' : '#1c1c1c',
       },
+      error: {
+        main: light ? '#B00020' : '#CF6679',
+        contrastText: light ? '#FFFFFF' : '#121212',
+      },
     },
   });
 };
