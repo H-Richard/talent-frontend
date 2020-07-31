@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     outline: 'none',
   },
-
   errorImageContainer: {
     minHeight: 90,
     maxHeight: 400,
