@@ -10,6 +10,27 @@ import { isLoggedIn } from './client/jwt';
 import Modals from './components/Modals';
 import Footer from './components/Footer';
 
+import JobDetails from './pages/Job Details';
+
+const sampleJob = {
+  active: true,
+  author: {
+    email: 'executive@gmail.com',
+    executive: true,
+    firstName: 'Executive',
+    lastName: 'Doe',
+    updatedAt: '2020-07-19T19:04:41.192603Z',
+  },
+  createdAt: '2020-07-19T19:04:41.199761Z',
+  description: 'Market Things',
+  desirements: ['Skills', 'Youtube'],
+  expiresAt: '2020-07-19T19:04:41.199659Z',
+  id: 2,
+  requirements: ['Instagram', 'Facebook'],
+  title: 'VP of Marketing',
+  updatedAt: '2020-07-19T19:04:41.199761Z',
+};
+
 function App() {
   const [themeType, setThemeType] = useState<'light' | 'dark' | undefined>('light');
   const toggleMode = useCallback(() => {
@@ -36,6 +57,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Switch>
         <Route path="/login" exact render={() => (isLoggedIn() ? <Redirect to="/home" /> : <Login />)} />
+        <Route path="/details" exact render={() => <JobDetails job={sampleJob} />} />
       </Switch>
       <Modals />
       <Footer />

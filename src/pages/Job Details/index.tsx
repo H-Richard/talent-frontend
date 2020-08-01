@@ -1,48 +1,48 @@
 import React, { FC } from 'react';
-import { FormControlState } from '@material-ui/core';
-
-const sampleJob = {
-  active: 'true',
-  author: {
-    email: 'executive@gmail.com',
-    executive: true,
-    firstName: 'Executive',
-    lastName: 'Doe',
-    updatedAt: '2020-07-19T19:04:41.192603Z',
-  },
-  createdAt: '2020-07-19T19:04:41.199761Z',
-  description: 'Market Things',
-  desirements: ['Skills', 'Youtube'],
-  expiresAt: '2020-07-19T19:04:41.199659Z',
-  id: 2,
-  requirements: ['Instagram', 'Facebook'],
-  title: 'VP of Marketing',
-  updatedAt: '2020-07-19T19:04:41.199761Z',
-};
+import Container from '@material-ui/core/Container';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 type JobProps = {
-  active: boolean;
-  author: {
-    email: string;
-    executive: boolean;
-    firstName: string;
-    lastName: string;
+  job: {
+    active: boolean;
+    author: {
+      email: string;
+      executive: boolean;
+      firstName: string;
+      lastName: string;
+      updatedAt: string;
+    };
+    createdAt: string;
+    description: string;
+    desirements: string[];
+    expiresAt: string;
+    id: number;
+    requirements: string[];
+    title: string;
     updatedAt: string;
-  };
-  createdAt: string;
-  description: string;
-  desirements: string[];
-  expiresAt: string;
-  id: number;
-  requirements: string[];
-  title: string;
-  updatedAt: string;
+  }
 };
 
-const JobDetails: FC<JobProps> = (details: JobProps) => (
-  <>
-    <h1>{details.title}</h1>
-  </>
+const parseDate = (date: string): string => {
+  const parsedDate: Date = new Date(Date.parse(date));
+  return parsedDate.toDateString();
+};
+
+const JobDetails: FC<JobProps> = ({ job }: JobProps) => (
+  <Container fixed maxWidth="md">
+    <Grid container spacing={0}>
+      <Grid item md={8}>
+        <Typography variant="h2">{job.title}</Typography>
+      </Grid>
+      <Grid item md={4}>
+        <Typography variant="h6">Posted: {parseDate(job.createdAt)}</Typography>
+        <Typography variant="h6">Last updated: {parseDate(job.updatedAt)}</Typography>
+        <Typography variant="h6">Expires: {parseDate(job.expiresAt)}</Typography>
+      </Grid>
+    </Grid>
+  </Container>
 );
 
 export default JobDetails;
