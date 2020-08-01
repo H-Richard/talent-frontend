@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import Container from '@material-ui/core/Container';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+// import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 type JobProps = {
   job: {
@@ -37,9 +37,9 @@ const JobDetails: FC<JobProps> = ({ job }: JobProps) => (
         <Typography variant="h2">{job.title}</Typography>
       </Grid>
       <Grid item md={4}>
-        <Typography variant="h6">Posted: {parseDate(job.createdAt)}</Typography>
-        <Typography variant="h6">Last updated: {parseDate(job.updatedAt)}</Typography>
-        <Typography variant="h6">Expires: {parseDate(job.expiresAt)}</Typography>
+        <Typography variant="h6">{`Posted: ${parseDate(job.createdAt)}`}</Typography>
+        <Typography variant="h6">{`Last updated: ${parseDate(job.updatedAt)}`}</Typography>
+        <Typography variant="h6">{`Expires: ${parseDate(job.expiresAt)}`}</Typography>
       </Grid>
     </Grid>
   </Container>
