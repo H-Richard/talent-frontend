@@ -30,7 +30,6 @@ const reducer: AuthReducer = produce(
             state.error = action.payload.error;
             break;
         }
-
         break;
       case actions.LOGIN_SUCCESS:
         state.currentUser = action.payload.user;
