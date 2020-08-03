@@ -61,7 +61,7 @@ export const signup = (
     callback();
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.log(err);
+    console.error(err);
     dispatch(loginError());
   }
 });
