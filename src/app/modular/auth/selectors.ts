@@ -6,3 +6,5 @@ import type { AuthState } from './types';
 const select = (state: RootState): AuthState => state.auth as AuthState;
 
 export const loading = (state: RootState): boolean => select(state).loading;
+
+export const error = (state: RootState): string | undefined => select(state).error;
