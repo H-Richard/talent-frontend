@@ -38,3 +38,30 @@ export const login = (
     dispatch(loginError());
   }
 });
+
+export const signup = (
+  {
+    firstName, lastName, email, password, callback,
+  }:
+  {firstName: string, lastName: string, email: string, password: string, callback: VoidFunction },
+): ThunkAction<void, RootState, unknown, Action> => (async (dispatch) => {
+  dispatch(loginStart());
+  try {
+    const { token, user }: any = await request.unauthenticatedRequest({
+      method: 'POST',
+      url: 'users',
+      body: {
+        firstName, lastName, email, password,
+      },
+    });
+    saveJWT(token);
+    user.updatedAt = new Date(user.updatedAt);
+    saveCurrentUser(user);
+    dispatch(loginSuccess(user));
+    callback();
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err);
+    dispatch(loginError());
+  }
+});
