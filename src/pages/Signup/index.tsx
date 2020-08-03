@@ -16,7 +16,7 @@ import {
   Paper,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import BorderColorIcon from '@material-ui/icons/BorderColor';
 import * as Yup from 'yup';
 import { withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
@@ -73,7 +73,7 @@ const Signup: React.FC<Props> = ({ handleSubmit }: Props) => {
       <CssBaseline>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
+            <BorderColorIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
@@ -177,17 +177,22 @@ const enhanceForm = withFormik({
     reenter_password: Yup.string().required('Confirm your password').oneOf([Yup.ref('password')], 'Password does not match'),
   }),
   handleSubmit: (
-    values: FormValues,
+    {
+      firstName,
+      lastName,
+      email,
+      password,
+    }: FormValues,
     { props: { signup }, setSubmitting, setFieldValue }:
     { props: Props, setSubmitting: Function, setFieldValue: Function },
   ) => {
     signup({
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-      password: values.password,
+      firstName,
+      lastName,
+      email,
+      password,
       onSignupSuccess() { setSubmitting(false); window.location.href = '/home'; },
-      onSignupFailure() { setSubmitting(false); setFieldValue('email', '', false); },
+      onSignupFailure() { setSubmitting(false); setFieldValue('email', '', false); setFieldValue('password', '', false); setFieldValue('reenter_password', '', false); },
     });
   },
   displayName: 'signup',

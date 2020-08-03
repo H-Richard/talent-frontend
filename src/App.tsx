@@ -23,7 +23,7 @@ function App() {
       <Header />
       <Switch>
         <Route path="/login" exact render={() => (isLoggedIn() ? <Redirect to="/home" /> : <Login />)} />
-        <Route path="/signup" exact render={() => (<Signup />)} />
+        <Route path="/signup" exact render={() => (isLoggedIn() ? <Redirect to="/home" /> : <Signup />)} />
       </Switch>
       <Modals />
       <Footer />
