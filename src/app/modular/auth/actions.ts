@@ -10,6 +10,9 @@ export const LOGIN_START = 'auth/loginStart';
 export const LOGIN_SUCCESS = 'auth/loginSuccess';
 export const LOGIN_ERROR = 'auth/loginError';
 export const CLEAR_ERROR = 'auth/clearError';
+export const SIGNUP_START = 'auth/signupStart';
+export const SIGNUP_SUCCESS = 'auth/signupSuccess';
+export const SIGNUP_ERROR = 'auth/signupError';
 
 export const loginStart = () => action(LOGIN_START);
 
@@ -19,6 +22,11 @@ export const loginSuccess = (user: User) => action(LOGIN_SUCCESS, { user });
 
 export const clearError = () => action(CLEAR_ERROR);
 
+export const signupStart = () => action(SIGNUP_START);
+
+export const signupSuccess = (user: User) => action(SIGNUP_SUCCESS, { user });
+
+export const signupError = (error: string) => action(SIGNUP_ERROR, { error });
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const login = (
   {
@@ -55,11 +63,23 @@ export const login = (
 
 export const signup = (
   {
-    firstName, lastName, email, password, callback,
+    firstName,
+    lastName,
+    email,
+    password,
+    onSignupSuccess,
+    onSignupFailure,
   }:
-  {firstName: string, lastName: string, email: string, password: string, callback: VoidFunction },
+  {
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    onSignupSuccess: VoidFunction,
+    onSignupFailure: VoidFunction
+  },
 ): ThunkAction<void, RootState, unknown, Action> => (async (dispatch) => {
-  dispatch(loginStart());
+  dispatch(signupStart());
   try {
     const { token, user }: any = await request.unauthenticatedRequest({
       method: 'POST',
@@ -71,11 +91,12 @@ export const signup = (
     saveJWT(token);
     user.updatedAt = new Date(user.updatedAt);
     saveCurrentUser(user);
-    dispatch(loginSuccess(user));
-    callback();
+    dispatch(signupSuccess(user));
+    onSignupSuccess();
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(err);
-    dispatch(loginError());
+    dispatch(signupError(err.message as string));
+    onSignupFailure();
   }
 });

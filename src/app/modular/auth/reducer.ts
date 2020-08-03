@@ -18,6 +18,7 @@ const reducer: AuthReducer = produce(
   (state: AuthState, action: AuthActions) => {
     switch (action.type) {
       case actions.LOGIN_START:
+      case actions.SIGNUP_START:
         state.loading = true;
         break;
       case actions.LOGIN_ERROR:
@@ -31,7 +32,19 @@ const reducer: AuthReducer = produce(
             break;
         }
         break;
+      case actions.SIGNUP_ERROR:
+        state.loading = false;
+        switch (action.payload.error.slice(-3)) {
+          case '409':
+            state.error = 'Credentials in use.';
+            break;
+          default:
+            state.error = action.payload.error;
+            break;
+        }
+        break;
       case actions.LOGIN_SUCCESS:
+      case actions.SIGNUP_SUCCESS:
         state.currentUser = action.payload.user;
         break;
       case actions.CLEAR_ERROR:

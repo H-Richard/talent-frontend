@@ -178,10 +178,16 @@ const enhanceForm = withFormik({
   }),
   handleSubmit: (
     values: FormValues,
-    { props: { signup } }: { props: Props },
+    { props: { signup }, setSubmitting, setFieldValue }:
+    { props: Props, setSubmitting: Function, setFieldValue: Function },
   ) => {
     signup({
-      firstName: values.firstName, lastName: values.lastName, email: values.email, password: values.password, callback() { window.location.href = '/home'; },
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      password: values.password,
+      onSignupSuccess() { setSubmitting(false); window.location.href = '/home'; },
+      onSignupFailure() { setSubmitting(false); setFieldValue('email', '', false); },
     });
   },
   displayName: 'signup',
