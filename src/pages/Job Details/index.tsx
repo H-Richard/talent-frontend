@@ -1,8 +1,31 @@
-import React, { FC } from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-// import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import React, { FC, ReactElement } from 'react';
+import {
+  Container,
+  Typography,
+  Grid,
+  Box,
+  makeStyles,
+  createStyles,
+  Theme,
+} from '@material-ui/core';
+import StyledButton from '../../components/common/StyledButton';
+
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  header: {
+    marginTop: theme.spacing(5),
+    marginBottom: theme.spacing(5),
+  },
+  title: {
+    paddingBottom: theme.spacing(4),
+  },
+  subsection: {
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+  },
+  section: {
+    paddingBottom: theme.spacing(3),
+  },
+}));
 
 type JobProps = {
   job: {
@@ -27,8 +50,9 @@ type JobProps = {
 
 const getDateDiff = (newDateStr: string, isExpiryDate: boolean = false): string => {
   const dateToday: Date = new Date();
+  const newDate: Date = new Date(newDateStr);
   const dateTodayInMs: number = dateToday.valueOf() - (dateToday.valueOf() % 86400000);
-  const newDateInMs: number = new Date(newDateStr).valueOf();
+  const newDateInMs: number = newDate.valueOf() - (newDate.valueOf() % 86400000);
 
   const prefix: string = (isExpiryDate) ? 'in ' : '';
   const suffix: string = (isExpiryDate) ? '' : ' ago';
@@ -48,19 +72,46 @@ const getDateDiff = (newDateStr: string, isExpiryDate: boolean = false): string 
   return returnString;
 };
 
-const JobDetails: FC<JobProps> = ({ job }: JobProps) => (
-  <Container fixed maxWidth="md">
-    <Grid container spacing={0}>
-      <Grid item md={8}>
-        <Typography variant="h2">{job.title}</Typography>
+const JobDetails: FC<JobProps> = ({ job }: JobProps): ReactElement => {
+  const styles = useStyles();
+
+  return (
+    <Container fixed maxWidth="md">
+      <Grid className={styles.header} container spacing={0}>
+        <Grid item md={8}>
+          <Typography className={styles.title} variant="h2">{job.title}</Typography>
+          <StyledButton text="Apply now" />
+        </Grid>
+        <Grid item md={4}>
+          <Typography variant="subtitle1">
+            <Box fontWeight="fontWeightBold" display="inline">Posted </Box>
+            {getDateDiff(job.createdAt)}
+          </Typography>
+          <Typography variant="subtitle1">
+            <Box fontWeight="fontWeightBold" display="inline">Last updated </Box>
+            {getDateDiff(job.updatedAt)}
+          </Typography>
+          <Typography variant="subtitle1">
+            <Box fontWeight="fontWeightBold" display="inline">Expires </Box>
+            {getDateDiff(job.expiresAt, true)}
+          </Typography>
+        </Grid>
       </Grid>
-      <Grid item md={4}>
-        <Typography variant="h6">{`Posted ${getDateDiff('2020-07-19')}`}</Typography>
-        <Typography variant="h6">{`Last updated ${getDateDiff(job.updatedAt)}`}</Typography>
-        <Typography variant="h6">{`Expires ${getDateDiff(job.expiresAt, true)}`}</Typography>
-      </Grid>
-    </Grid>
-  </Container>
-);
+      <div className={styles.subsection}>
+        <Typography className={styles.subsection} variant="h5">Description:</Typography>
+        <Typography variant="body1">{job.description}</Typography>
+      </div>
+      <div className={styles.subsection}>
+        <Typography className={styles.subsection} variant="h5">Requirements:</Typography>
+        <Typography variant="body1">{job.requirements}</Typography>
+      </div>
+      <div className={styles.subsection}>
+        <Typography className={styles.subsection} variant="h5">Nice to have:</Typography>
+        <Typography variant="body1">{job.desirements}</Typography>
+        <Typography variant="body1">{job.description}</Typography>
+      </div>
+    </Container>
+  );
+};
 
 export default JobDetails;
