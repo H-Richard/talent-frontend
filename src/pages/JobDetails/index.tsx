@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC } from 'react';
 import {
   Container,
   Typography,
@@ -58,7 +58,7 @@ type JobProps = {
   }
 };
 
-const JobDetails: FC<JobProps> = ({ job }: JobProps): ReactElement => {
+const JobDetails: FC<JobProps> = ({ job }: JobProps) => {
   const styles = useStyles();
 
   return (

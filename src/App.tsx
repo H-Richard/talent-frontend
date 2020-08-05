@@ -10,7 +10,7 @@ import { isLoggedIn } from './client/jwt';
 import Modals from './components/Modals';
 import Footer from './components/Footer';
 
-import JobDetails from './pages/Job Details';
+import JobDetails from './pages/JobDetails';
 
 const sampleJob = {
   active: true,
