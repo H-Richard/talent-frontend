@@ -4,6 +4,8 @@ import {
   Typography,
   Grid,
   Box,
+  Divider,
+  Button,
   makeStyles,
   createStyles,
   Theme,
@@ -12,18 +14,26 @@ import StyledButton from '../../components/common/StyledButton';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   header: {
-    marginTop: theme.spacing(5),
-    marginBottom: theme.spacing(5),
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(3),
   },
-  title: {
-    paddingBottom: theme.spacing(4),
+  applyButton: {
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
   },
   subsection: {
-    paddingTop: theme.spacing(1),
+    paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(1),
   },
-  section: {
-    paddingBottom: theme.spacing(3),
+  subsectionTitle: {
+    paddingBottom: theme.spacing(1),
+  },
+  list: {
+    marginTop: theme.spacing(0),
+    marginBottom: theme.spacing(0),
+  },
+  footer: {
+    paddingBottom: theme.spacing(10),
   },
 }));
 
@@ -48,69 +58,83 @@ type JobProps = {
   }
 };
 
-const getDateDiff = (newDateStr: string, isExpiryDate: boolean = false): string => {
-  const dateToday: Date = new Date();
-  const newDate: Date = new Date(newDateStr);
-  const dateTodayInMs: number = dateToday.valueOf() - (dateToday.valueOf() % 86400000);
-  const newDateInMs: number = newDate.valueOf() - (newDate.valueOf() % 86400000);
-
-  const prefix: string = (isExpiryDate) ? 'in ' : '';
-  const suffix: string = (isExpiryDate) ? '' : ' ago';
-
-  const millisecondsDiff: number = Math.abs(newDateInMs - dateTodayInMs);
-  const daysDiff: number = Math.ceil(millisecondsDiff / 86400000);
-
-  let returnString: string;
-  if (daysDiff < 1) {
-    returnString = 'today';
-  } else if (daysDiff === 1) {
-    returnString = (isExpiryDate) ? 'tomorrow' : 'yesterday';
-  } else {
-    returnString = `${prefix}${daysDiff} days${suffix}`;
-  }
-
-  return returnString;
-};
-
 const JobDetails: FC<JobProps> = ({ job }: JobProps): ReactElement => {
   const styles = useStyles();
 
   return (
-    <Container fixed maxWidth="md">
-      <Grid className={styles.header} container spacing={0}>
-        <Grid item md={8}>
-          <Typography className={styles.title} variant="h2">{job.title}</Typography>
-          <StyledButton text="Apply now" />
+    <>
+      <Container fixed maxWidth="md">
+        <Grid className={styles.header} container spacing={0}>
+          <Grid item md={9}>
+            <Typography variant="h2">{job.title}</Typography>
+            <div className={styles.applyButton}>
+              {job.active ? <StyledButton text="Apply now" /> : <Button variant="contained" disabled>Expired</Button> }
+            </div>
+          </Grid>
+          <Grid item md={3}>
+            <Typography variant="subtitle1">
+              <Box fontWeight="fontWeightBold" display="inline">Posted </Box>
+              {new Date(job.createdAt).toDateString()}
+            </Typography>
+            <Typography variant="subtitle1">
+              <Box fontWeight="fontWeightBold" display="inline">Last updated </Box>
+              {new Date(job.updatedAt).toDateString()}
+            </Typography>
+            {job.active && (
+              <Typography variant="subtitle1">
+                <Box fontWeight="fontWeightBold" display="inline">Expires </Box>
+                {new Date(job.expiresAt).toDateString()}
+              </Typography>
+            )}
+          </Grid>
+          <Typography variant="subtitle1">
+            <Box fontWeight="fontWeightBold" display="inline">Posted by: </Box>
+            {job.author.firstName}
+            {' '}
+            {job.author.lastName}
+            {' - '}
+            {job.author.email}
+          </Typography>
         </Grid>
-        <Grid item md={4}>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold" display="inline">Posted </Box>
-            {getDateDiff(job.createdAt)}
-          </Typography>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold" display="inline">Last updated </Box>
-            {getDateDiff(job.updatedAt)}
-          </Typography>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold" display="inline">Expires </Box>
-            {getDateDiff(job.expiresAt, true)}
-          </Typography>
+      </Container>
+
+      <Divider />
+
+      <Container fixed maxWidth="md">
+        <div className={styles.subsection}>
+          <Typography className={styles.subsectionTitle} variant="h5">Description</Typography>
+          <Typography variant="subtitle1">{job.description}</Typography>
+        </div>
+
+        <Grid className={styles.footer} container spacing={10}>
+          <Grid item md={6}>
+            <div className={styles.subsection}>
+              <Typography className={styles.subsectionTitle} variant="h5">Requirements</Typography>
+              <ul className={styles.list}>
+                {job.requirements.map((requirement) => (
+                  <li key={requirement}>
+                    <Typography variant="subtitle1">{requirement}</Typography>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Grid>
+
+          <Grid item md={6}>
+            <div className={styles.subsection}>
+              <Typography className={styles.subsectionTitle} variant="h5">Nice to have</Typography>
+              <ul className={styles.list}>
+                {job.desirements.map((desirement) => (
+                  <li key={desirement}>
+                    <Typography variant="subtitle1">{desirement}</Typography>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Grid>
         </Grid>
-      </Grid>
-      <div className={styles.subsection}>
-        <Typography className={styles.subsection} variant="h5">Description:</Typography>
-        <Typography variant="body1">{job.description}</Typography>
-      </div>
-      <div className={styles.subsection}>
-        <Typography className={styles.subsection} variant="h5">Requirements:</Typography>
-        <Typography variant="body1">{job.requirements}</Typography>
-      </div>
-      <div className={styles.subsection}>
-        <Typography className={styles.subsection} variant="h5">Nice to have:</Typography>
-        <Typography variant="body1">{job.desirements}</Typography>
-        <Typography variant="body1">{job.description}</Typography>
-      </div>
-    </Container>
+      </Container>
+    </>
   );
 };
 
