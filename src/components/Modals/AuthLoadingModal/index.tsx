@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   loading: {
     marginTop: theme.spacing(1),
-  }
+  },
 }));
 
 const AuthLoadingModal: React.FC<Props> = ({
