@@ -6,7 +6,7 @@ import { Posts } from './types';
 import * as request from '../../../client';
 
 export const LOADING_START = 'post/loadingStart';
-export const SAVE_POSTS = 'post/fetchPosts';
+export const SAVE_POSTS = 'post/savePosts';
 export const LOADING_SUCCESS = 'post/loadingSuccess';
 export const LOADING_ERROR = 'post/loadingError';
 

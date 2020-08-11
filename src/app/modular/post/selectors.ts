@@ -2,7 +2,7 @@
 import { RootState } from '../../types';
 import { PostState, Post } from './types';
 
-const select = (state: RootState): PostState => state.auth as PostState;
+const select = (state: RootState): PostState => state.post as PostState;
 
 export const posts = (state: RootState): Post[] => Object.values(select(state).posts);
 
