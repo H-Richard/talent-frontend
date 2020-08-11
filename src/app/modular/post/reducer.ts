@@ -25,8 +25,6 @@ const reducer: PostReducer = produce(
         state.posts = action.payload.posts;
         break;
       case actions.LOADING_SUCCESS:
-        state.loading = false;
-        break;
       case actions.LOADING_ERROR:
         state.loading = false;
         break;
