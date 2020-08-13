@@ -16,7 +16,7 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());
-  }, []);
+  });
   const currentTheme = useThemeMode();
 
   const theme: Theme = useMemo(

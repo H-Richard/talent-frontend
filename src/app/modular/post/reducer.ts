@@ -24,6 +24,9 @@ const reducer: PostReducer = produce(
       case actions.SAVE_POSTS:
         state.posts = action.payload.posts;
         break;
+      case actions.ADD_POST:
+        state.posts[action.payload.post.id] = action.payload.post;
+        break;
       case actions.LOADING_SUCCESS:
       case actions.LOADING_ERROR:
         state.loading = false;
