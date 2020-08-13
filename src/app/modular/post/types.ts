@@ -20,4 +20,5 @@ export interface Posts {
 export interface PostState {
   loading: boolean
   posts: Posts
+  error?: string
 }

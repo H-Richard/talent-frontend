@@ -10,16 +10,19 @@ export const SAVE_POSTS = 'post/savePosts';
 export const LOADING_SUCCESS = 'post/loadingSuccess';
 export const LOADING_ERROR = 'post/loadingError';
 export const ADD_POST = 'post/addPost';
+export const CLEAR_ERROR = 'post/clearError';
 
 export const loadingStart = () => action(LOADING_START);
 
 export const savePosts = (posts: Posts) => action(SAVE_POSTS, { posts });
 
-export const loadingError = () => action(LOADING_ERROR);
+export const loadingError = (error: string) => action(LOADING_ERROR, { error });
 
 export const loadingSuccess = () => action(LOADING_SUCCESS);
 
 export const addPost = (post: Post) => action(ADD_POST, { post });
+
+export const clearError = () => action(CLEAR_ERROR);
 
 export const getPosts = ():
 ThunkAction<void, RootState, null, any> => (async (dispatch) => {
@@ -70,10 +73,9 @@ export const createPost = ({
     res.expiresAt = new Date(res.expiresAt);
     res.author.updatedAt = new Date(res.author.updatedAt);
     dispatch(addPost(res));
-    dispatch(loadingSuccess());
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(err);
-    dispatch(loadingError());
+    dispatch(loadingError(err.message as string));
   }
 });
