@@ -35,7 +35,7 @@ export default function Footer() {
   return (
     <footer className={classes.footer}>
       <Typography variant="body1">
-        Built with React, Redux, Typescript and
+        Built with React, Redux, TypeScript and
         {' '}
         <span role="img" aria-label="heart">
           ❤️
