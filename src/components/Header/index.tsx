@@ -8,6 +8,8 @@ import {
 import Moon from './img/moon.png';
 import Sun from './img/sun.png';
 import { useThemeMode } from '../../theme';
+import { isLoggedIn } from '../../client/jwt';
+import LogoutButton from '../LogoutButton';
 
 const DarkModeSwitch = withStyles((theme: Theme) => createStyles({
   root: {
@@ -85,12 +87,12 @@ const Header: React.FC = () => {
               <DarkModeSwitch onChange={toggleTheme as VoidFunction} checked={currentTheme === 'dark'} />
             </Grid>
             <Grid item>
-              <Button
-                color="inherit"
-                href="/login"
-              >
-                Login
-              </Button>
+              {isLoggedIn() ? <LogoutButton />
+                : (
+                  <Button color="inherit" href="/login">
+                    Login
+                  </Button>
+                )}
             </Grid>
             <Grid item>
               <Button
