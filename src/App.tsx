@@ -25,7 +25,7 @@ function App() {
       <Switch>
         <Route path="/login" exact render={() => (isLoggedIn() ? <Redirect to="/home" /> : <Login />)} />
         <Route path="/signup" exact render={() => (isLoggedIn() ? <Redirect to="/home" /> : <Signup />)} />
-        <Route path="/job-details" exact render={() => (<JobDetails />)} />
+        <Route path="/job-details/:id" exact component={JobDetails} />
       </Switch>
       <Modals />
       <Footer />

@@ -6,33 +6,28 @@ import {
   Grid,
   CssBaseline,
 } from '@material-ui/core';
-import { User } from '../../app/modular/auth/types';
+import { Post } from '../../app/modular/post/types';
 
-type Props = {
-  post: {
-    id: number,
-    title: string,
-    author: User
+interface ConnectedProps {
+  post?: Post
+}
 
-    createdAt: Date,
-    expiresAt: Date,
-    active: boolean,
+interface UnconnectedProps {
+  id: number
+}
 
-    description: string,
-    requirements: Array<string>,
-    desirements: Array<string>,
-  }
-};
-const stuff = {
+type Props = ConnectedProps & UnconnectedProps;
+
+const mock: Post = {
   active: 'true',
   author: {
     email: 'executive@gmail.com',
     executive: true,
     firstName: 'Executive',
     lastName: 'Doe',
-    updatedAt: '2020-07-19T19:04:41.192603Z',
+    updatedAt: new Date('2020-07-19T19:04:41.192603Z'),
   },
-  createdAt: '2020-07-19T19:04:41.199761Z',
+  createdAt: new Date('2020-07-19T19:04:41.199761Z'),
   description: 'Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things Market Things   ',
   desirements: [
     'Skills Skills Skills Skills Skills Skills Skills Skills ',
@@ -44,7 +39,7 @@ const stuff = {
     'Skills Skills Skills Skills Skills Skills Skills Skills ',
     'Youtube Youtube Youtube Youtube Youtube Youtube Youtube Youtube ',
   ],
-  expiresAt: '2020-07-19T19:04:41.199659Z',
+  expiresAt: new Date('2020-07-19T19:04:41.199659Z'),
   id: 2,
   requirements: [
     'Instagram Instagram Instagram Instagram Instagram Instagram Instagram Instagram ',
@@ -55,19 +50,21 @@ const stuff = {
     'Facebook Facebook Facebook Facebook Facebook Facebook Facebook Facebook Facebook ',
   ],
   title: 'VP of Marketing',
-  updatedAt: '2020-07-19T19:04:41.199761Z',
+  updatedAt: new Date('2020-07-19T19:04:41.199761Z'),
 };
 
-const JobDetails: React.FC = () => {
-  const toBullets = (item: string) => (
-    <li>{item}</li>
-  );
+const JobDetails: React.FC<Props> = ({
+  post = mock,
+}: Props) => {
+  const {
+    title, description, desirements, requirements,
+  } = post;
 
-  const top = (
+  const jobDetailsHeader = (
     <Grid container justify="center">
       <Grid item xs={7}>
         <Typography variant="h3">
-          {stuff.title}
+          {title}
         </Typography>
       </Grid>
       <Grid item xs={3}>
@@ -78,27 +75,39 @@ const JobDetails: React.FC = () => {
     </Grid>
   );
 
-  const bot = (
+  const jobDetailsBody = (
     <Grid container justify="center">
       <Grid item xs={10}>
         <br />
         <Typography variant="h6">Job Description:</Typography>
-        <Typography variant="body1">{stuff.description}</Typography>
+        <Typography variant="body1">{description}</Typography>
         <br />
         <Typography variant="h6">Required Skills:</Typography>
-        <Typography variant="body1"><ul>{stuff.requirements.map(toBullets)}</ul></Typography>
+        <Typography variant="body1">
+          <ul>
+            {requirements.map((item: string) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </Typography>
         <br />
         <Typography variant="h6">Desired Skills:</Typography>
-        <Typography variant="body1"><ul>{stuff.desirements.map(toBullets)}</ul></Typography>
+        <Typography variant="body1">
+          <ul>
+            {desirements.map((item: string) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </Typography>
       </Grid>
     </Grid>
   );
 
   return (
-    <Container style={{ marginTop: '70px' }} maxWidth="md">
+    <Container style={{ marginTop: '90px' }} maxWidth="md">
       <CssBaseline>
-        {top}
-        {bot}
+        {jobDetailsHeader}
+        {jobDetailsBody}
       </CssBaseline>
     </Container>
   );
