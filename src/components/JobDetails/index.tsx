@@ -29,7 +29,7 @@ const JobDetails: React.FC<Props> = ({
   }
   const {
     title, description, desirements, requirements, createdAt, expiresAt,
-    updatedAt
+    updatedAt,
   } = post!;
 
   return (
