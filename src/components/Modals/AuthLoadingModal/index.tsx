@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography, LinearProgress } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { connect } from 'react-redux';
 import Container from '../container';
@@ -13,17 +14,35 @@ interface ConnectedProps {
 
 type Props = ConnectedProps;
 
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    outline: 'none',
+  },
+  linearProgress: {
+    width: '100%',
+    marginTop: theme.spacing(1),
+  },
+  loading: {
+    marginTop: theme.spacing(1),
+  },
+}));
+
 const AuthLoadingModal: React.FC<Props> = ({
   loading,
-}: Props) => (
-  <Container
-    open={loading}
-  >
-    <Typography>
-      Loading!
-    </Typography>
-  </Container>
-);
+}: Props) => {
+  const classes = useStyles();
+  return (
+    <Container
+      open={loading}
+      className={classes.paper}
+    >
+      <LinearProgress className={classes.linearProgress} color="secondary" />
+      <Typography className={classes.loading}>
+        Loading...
+      </Typography>
+    </Container>
+  );
+};
 
 const mapStateToProps = (state: RootState): Props => ({
   loading: authDuck.selectors.loading(state),
