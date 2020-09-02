@@ -10,7 +10,7 @@ interface PostDuck {
 }
 
 const duck: PostDuck = {
-  name: 'Post',
+  name: 'post',
   actions,
   reducer,
   selectors,
