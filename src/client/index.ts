@@ -37,7 +37,7 @@ export const post = async ({
   url: string
   body: object
   headers?: object
-}): Promise<object> => {
+}): Promise<any> => {
   const response = await fetch(buildURL(url), {
     method: 'POST',
     cache: 'no-cache',
@@ -60,7 +60,7 @@ export const put = async ({
   url: string
   body: object
   headers?: object
-}): Promise<object> => {
+}): Promise<any> => {
   const response = await fetch(buildURL(url), {
     method: 'PUT',
     cache: 'no-cache',
@@ -83,7 +83,7 @@ export const patch = async ({
   url: string
   body: object
   headers?: object
-}): Promise<object> => {
+}): Promise<any> => {
   const response = await fetch(buildURL(url), {
     method: 'PATCH',
     cache: 'no-cache',
@@ -104,7 +104,7 @@ export const get = async ({
 }: {
   url: string
   headers?: object
-}): Promise<object> => {
+}): Promise<any> => {
   const response = await fetch(buildURL(url), {
     method: 'GET',
     cache: 'no-cache',
@@ -127,7 +127,7 @@ export const unauthenticatedRequest = async ({
   method: string,
   headers?: object
   body?: object
-}) => {
+}): Promise<any> => {
   const response = await fetch(buildURL(url), {
     method,
     cache: 'no-cache',
