@@ -12,11 +12,13 @@ import Footer from './components/Footer';
 import { useThemeMode, computeTheme } from './theme';
 import JobDetails from './components/JobDetails';
 import { getPosts } from './app/modular/post/actions';
+import { getApplications } from './app/modular/application/actions';
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());
+    dispatch(getApplications());
   });
   const currentTheme = useThemeMode();
 
