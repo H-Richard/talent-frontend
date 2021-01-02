@@ -1,4 +1,6 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+
 import {
   Container,
   Button,
@@ -10,6 +12,8 @@ import { connect } from 'react-redux';
 import postDuck from '../../app/modular/post';
 import { RootState } from '../../app/types';
 import { Post } from '../../app/modular/post/types';
+
+import calculateRelativeTime from '../../utils/relative-time';
 
 interface ConnectedProps {
   post?: Post
@@ -28,35 +32,25 @@ const JobDetails: React.FC<Props> = ({
     return <>404</>;
   }
   const {
-    title, description, desirements, requirements, createdAt, expiresAt,
-    updatedAt,
+    title, description, desirements, requirements, createdAt,
   } = post!;
 
   return (
     <Container style={{ marginTop: '90px' }} maxWidth="md">
       <CssBaseline>
         {/* HEADER */}
-        <Grid container justify="space-between">
+        <Grid container justify="space-between" alignItems="center">
           <Grid item>
-            <Typography variant="h4">
+            <Typography variant="h2">
               {title}
             </Typography>
           </Grid>
-          <Button variant="contained" color="primary" size="medium">Apply For This Job</Button>
+          <Button variant="contained" color="primary" size="medium" style={{ height: '40px' }}>Apply For This Job</Button>
         </Grid>
         <Grid container justify="flex-start">
           <Grid item>
-            <Typography variant="body2">
-              Posted On:&nbsp;
-              {createdAt.toDateString()}
-            </Typography>
-            <Typography variant="body2">
-              Expires On:&nbsp;
-              {expiresAt.toDateString()}
-            </Typography>
-            <Typography variant="body2">
-              Last Updated:&nbsp;
-              {updatedAt.toDateString()}
+            <Typography variant="body1" style={{ opacity: '60%' }}>
+              {calculateRelativeTime(createdAt)}
             </Typography>
           </Grid>
         </Grid>
@@ -64,10 +58,13 @@ const JobDetails: React.FC<Props> = ({
         {/* BODY */}
         <Grid item>
           <br />
-          <Typography variant="body2">{description}</Typography>
+          <Typography variant="h5">About the job</Typography>
           <br />
-          <Typography variant="body2"><b>Required Skills:</b></Typography>
-          <Typography variant="body2">
+          <Typography variant="body1">{description}</Typography>
+          <br />
+          <br />
+          <Typography variant="body1"><b>Required Skills:</b></Typography>
+          <Typography variant="body1">
             <ul>
               {requirements.map((item: string) => (
                 <li>{item}</li>
@@ -75,8 +72,9 @@ const JobDetails: React.FC<Props> = ({
             </ul>
           </Typography>
           <br />
-          <Typography variant="body2"><b>Desired Skills:</b></Typography>
-          <Typography variant="body2">
+          <br />
+          <Typography variant="body1"><b>Desired Skills:</b></Typography>
+          <Typography variant="body1">
             <ul>
               {desirements.map((item: string) => (
                 <li>{item}</li>
@@ -89,7 +87,7 @@ const JobDetails: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = (state: RootState, { id } : Props): ConnectedProps => ({
+const mapStateToProps = (state: RootState, { id }: Props): ConnectedProps => ({
   post: postDuck.selectors.post(state, id),
 });
 
