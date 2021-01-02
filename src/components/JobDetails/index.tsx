@@ -63,23 +63,19 @@ const JobDetails: React.FC<Props> = ({
           <br />
           <br />
           <Typography variant="body1"><b>Required Skills:</b></Typography>
-          <Typography variant="body1">
-            <ul>
-              {requirements.map((item: string) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </Typography>
+          <ul>
+            {requirements.map((item: string) => (
+              <li key={item}><Typography variant="body1">{item}</Typography></li>
+            ))}
+          </ul>
           <br />
           <br />
           <Typography variant="body1"><b>Desired Skills:</b></Typography>
-          <Typography variant="body1">
-            <ul>
-              {desirements.map((item: string) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </Typography>
+          <ul>
+            {desirements.map((item: string) => (
+              <li key={item}><Typography variant="body1">{item}</Typography></li>
+            ))}
+          </ul>
         </Grid>
       </CssBaseline>
     </Container>
