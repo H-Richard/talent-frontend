@@ -18,7 +18,7 @@ const reducer: ApplicationReducer = produce(
   (state: ApplicationState, action: ApplicationAction) => {
     switch (action.type) {
       case actions.SAVE_APPLICATIONS:
-        state.applications = action.payload.apps;
+        state.applications = action.payload.applications;
         break;
       default:
         break;
