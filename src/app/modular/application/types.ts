@@ -6,12 +6,12 @@ export interface Application {
   postId: number,
   status: number,
   appliedAt: Date,
-  gitHubURL: string,
-  linkedInURL: string,
-  portfolioURL: string,
-  otherURL: string,
-  resumeURL: string,
-  additionalInfo: string,
+  gitHubURL?: string,
+  linkedInURL?: string,
+  portfolioURL?: string,
+  otherURL?: string,
+  resumeURL?: string,
+  additionalInfo?: string,
 }
 
 export interface Applications {
