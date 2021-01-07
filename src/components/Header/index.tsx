@@ -10,7 +10,6 @@ import {
 import Moon from './img/moon.png';
 import Sun from './img/sun.png';
 import { useThemeMode } from '../../theme';
-// import { isLoggedIn } from '../../client/jwt';
 import LogoutButton from '../LogoutButton';
 import { RootState } from '../../app/types';
 import authDuck from '../../app/modular/auth';

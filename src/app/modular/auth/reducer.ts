@@ -6,12 +6,15 @@ import { ActionType } from 'typesafe-actions';
 import type { AuthState } from './types';
 import * as actions from './actions';
 
+import { JWT_ACCESS_KEY } from '../../../client/jwt';
+
 type AuthActions = ActionType<typeof actions>;
 
 const initialState: AuthState = {
   loading: false,
-  loggedIn: window.localStorage.getItem('jwt:access') !== null,
+  loggedIn: localStorage.getItem(JWT_ACCESS_KEY) !== null,
 };
+// change this in the future to check for valid token instead of just existence
 
 export type AuthReducer = Reducer<AuthState, AuthActions>;
 
