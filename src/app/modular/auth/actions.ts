@@ -2,13 +2,14 @@ import { action, Action } from 'typesafe-actions';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
 import * as request from '../../../client';
-import { saveJWT } from '../../../client/jwt';
+import { saveJWT, clearJWT } from '../../../client/jwt';
 import { User } from './types';
-import { saveCurrentUser } from '../../../client/user';
+import { saveCurrentUser, clearCurrentUser } from '../../../client/user';
 
 export const LOGIN_START = 'auth/loginStart';
 export const LOGIN_SUCCESS = 'auth/loginSuccess';
 export const LOGIN_ERROR = 'auth/loginError';
+export const LOGOUT_SUCCESS = 'auth/logoutSuccess';
 export const CLEAR_ERROR = 'auth/clearError';
 export const SIGNUP_START = 'auth/signupStart';
 export const SIGNUP_SUCCESS = 'auth/signupSuccess';
@@ -19,6 +20,8 @@ export const loginStart = () => action(LOGIN_START);
 export const loginError = (error: string) => action(LOGIN_ERROR, { error });
 
 export const loginSuccess = (user: User) => action(LOGIN_SUCCESS, { user });
+
+export const logoutSuccess = () => action(LOGOUT_SUCCESS);
 
 export const clearError = () => action(CLEAR_ERROR);
 
@@ -58,6 +61,18 @@ export const login = (
     console.error(err);
     dispatch(loginError(err.message as string));
     onLoginFailure();
+  }
+});
+
+export const logout = (
+): ThunkAction<void, RootState, unknown, Action> => (async (dispatch) => {
+  try {
+    clearCurrentUser();
+    clearJWT();
+    dispatch(logoutSuccess());
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err);
   }
 });
 

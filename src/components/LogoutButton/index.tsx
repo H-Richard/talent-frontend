@@ -1,17 +1,23 @@
 import React, { useCallback } from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { clearCurrentUser } from '../../client/user';
-import { clearJWT } from '../../client/jwt';
 
-const LogoutButton: React.FC = () => {
+import authDuck from '../../app/modular/auth';
+
+interface ConnectedActions {
+  logout: typeof authDuck.actions.logout;
+}
+
+type Props = ConnectedActions;
+
+const LogoutButton: React.FC<Props> = ({ logout }: Props) => {
   const history = useHistory();
 
   const handleClick = useCallback((): void => {
     history.push('/');
-
-    clearCurrentUser();
-    clearJWT();
+    logout();
   }, [history]);
 
   return (
@@ -19,4 +25,10 @@ const LogoutButton: React.FC = () => {
   );
 };
 
-export default LogoutButton;
+const mapPropsToDispatch = {
+  logout: authDuck.actions.logout,
+};
+
+export default compose<React.FC>(
+  connect(null, mapPropsToDispatch),
+)(LogoutButton);

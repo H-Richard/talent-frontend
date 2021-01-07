@@ -1,4 +1,6 @@
 import React, { useCallback } from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import {
   makeStyles, withStyles, createStyles, Theme,
 } from '@material-ui/core/styles';
@@ -8,8 +10,10 @@ import {
 import Moon from './img/moon.png';
 import Sun from './img/sun.png';
 import { useThemeMode } from '../../theme';
-import { isLoggedIn } from '../../client/jwt';
+// import { isLoggedIn } from '../../client/jwt';
 import LogoutButton from '../LogoutButton';
+import { RootState } from '../../app/types';
+import { AuthState } from '../../app/modular/auth/types';
 
 const DarkModeSwitch = withStyles((theme: Theme) => createStyles({
   root: {
@@ -66,7 +70,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Header: React.FC = () => {
+interface Props { auth: AuthState }
+
+const Header: React.FC<Props> = ({ auth }: Props) => {
   const classes = useStyles();
   const currentTheme = useThemeMode();
 
@@ -87,7 +93,7 @@ const Header: React.FC = () => {
               <DarkModeSwitch onChange={toggleTheme as VoidFunction} checked={currentTheme === 'dark'} />
             </Grid>
             <Grid item>
-              {isLoggedIn() ? <LogoutButton />
+              {auth.loggedIn ? <LogoutButton />
                 : (
                   <Button color="inherit" href="/login">
                     Login
@@ -110,4 +116,10 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+const mapStateToProps = ({ auth }: RootState) => ({
+  auth,
+});
+
+export default compose<React.FC>(
+  connect(mapStateToProps, null),
+)(Header);

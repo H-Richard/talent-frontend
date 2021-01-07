@@ -10,6 +10,7 @@ type AuthActions = ActionType<typeof actions>;
 
 const initialState: AuthState = {
   loading: false,
+  loggedIn: window.localStorage.getItem('jwt:access') !== null,
 };
 
 export type AuthReducer = Reducer<AuthState, AuthActions>;
@@ -32,6 +33,9 @@ const reducer: AuthReducer = produce(
             break;
         }
         break;
+      case actions.LOGOUT_SUCCESS:
+        state.loggedIn = false;
+        break;
       case actions.SIGNUP_ERROR:
         state.loading = false;
         switch (action.payload.error.slice(-3)) {
@@ -44,6 +48,8 @@ const reducer: AuthReducer = produce(
         }
         break;
       case actions.LOGIN_SUCCESS:
+        state.loggedIn = true;
+        break;
       case actions.SIGNUP_SUCCESS:
         state.currentUser = action.payload.user;
         break;
