@@ -13,7 +13,7 @@ import { useThemeMode } from '../../theme';
 // import { isLoggedIn } from '../../client/jwt';
 import LogoutButton from '../LogoutButton';
 import { RootState } from '../../app/types';
-import { AuthState } from '../../app/modular/auth/types';
+import authDuck from '../../app/modular/auth';
 
 const DarkModeSwitch = withStyles((theme: Theme) => createStyles({
   root: {
@@ -70,9 +70,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface Props { auth: AuthState }
+interface ConnectedProps {
+  loggedIn: boolean;
+}
 
-const Header: React.FC<Props> = ({ auth }: Props) => {
+type Props = ConnectedProps;
+
+const Header: React.FC<Props> = ({ loggedIn }: Props) => {
   const classes = useStyles();
   const currentTheme = useThemeMode();
 
@@ -93,7 +97,7 @@ const Header: React.FC<Props> = ({ auth }: Props) => {
               <DarkModeSwitch onChange={toggleTheme as VoidFunction} checked={currentTheme === 'dark'} />
             </Grid>
             <Grid item>
-              {auth.loggedIn ? <LogoutButton />
+              {loggedIn ? <LogoutButton />
                 : (
                   <Button color="inherit" href="/login">
                     Login
@@ -116,8 +120,8 @@ const Header: React.FC<Props> = ({ auth }: Props) => {
   );
 };
 
-const mapStateToProps = ({ auth }: RootState) => ({
-  auth,
+const mapStateToProps = (state: RootState): Props => ({
+  loggedIn: authDuck.selectors.loggedIn(state),
 });
 
 export default compose<React.FC>(
