@@ -40,7 +40,7 @@ export const computeTheme = (currentTheme: 'light' | 'dark' | undefined): Theme 
     palette: {
       type: currentTheme,
       primary: {
-        main: light ? '#1976d2' : '#90caf9',
+        main: light ? '#1976d2' : '#f50057',
       },
       background: {
         default: light ? '#fafafa' : '#121212',

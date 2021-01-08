@@ -3,7 +3,7 @@ import { User } from '../auth/types';
 export interface Post {
   id: number
   author: User
-  active: string
+  active: boolean
   title: string
   description: string
   desirements: string[]
