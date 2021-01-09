@@ -17,7 +17,7 @@ function FooterInfo() {
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    padding: theme.spacing(3, 4),
+    padding: theme.spacing(2, 3),
     position: 'fixed',
     bottom: '0',
     left: '0',

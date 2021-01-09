@@ -5,6 +5,7 @@ import './App.css';
 import { useDispatch } from 'react-redux';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Landing from './pages/Landing';
 import { isLoggedIn } from './client/jwt';
 import Modals from './components/Modals';
 import Header from './components/Header';
@@ -31,6 +32,7 @@ function App() {
       <Switch>
         <Route path="/login" exact render={() => (isLoggedIn() ? <Redirect to="/home" /> : <Login />)} />
         <Route path="/signup" exact render={() => (isLoggedIn() ? <Redirect to="/home" /> : <Signup />)} />
+        <Route path="/" exact render={() => (<Landing />)} />
         <Route
           path="/post/:id"
           exact
