@@ -7,7 +7,8 @@ export interface User {
 }
 
 export interface AuthState {
-  loading: boolean
+  loading: boolean,
+  loggedIn: boolean,
   currentUser?: User
   error?: string
 }

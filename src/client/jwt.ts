@@ -1,6 +1,6 @@
 import { clearCurrentUser } from './user';
 
-const JWT_ACCESS_KEY = 'jwt:access';
+export const JWT_ACCESS_KEY = 'jwt:access';
 const JWT_EXPIRY = 'jwt:expiry';
 
 export const JWT_ACCESS_EXPIRY = 1000 * 60 * 50;
